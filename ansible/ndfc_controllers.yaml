@@ -1,0 +1,82 @@
+all:
+  vars:
+    ansible_user: "admin"
+    ansible_python_interpreter: python
+    ansible_httpapi_validate_certs: False
+    ansible_httpapi_use_ssl: True
+  children:
+    ndfc:
+      vars:
+        ansible_connection: ansible.netcommon.httpapi
+        ansible_network_os: cisco.dcnm.dcnm
+        ansible_user: "admin"
+        ansible_password: "cisco.123"
+        switch_username: admin
+        switch_password: "cisco.123"
+      hosts:
+        # 10.15.0.20:
+        #   staging_spine1: 10.15.4.11
+        #   staging_leaf1: 10.15.4.12
+        #   staging_leaf2: 10.15.4.13
+        #   prod_spine1: 10.15.4.14
+        #   prod_leaf1: 10.15.4.15
+        #   prod_leaf2: 10.15.4.16
+          # ansible_user: "admin"
+          # ansible_password: "cisco.123"
+          # switch_username: admin
+          # switch_password: "cisco.123"
+        10.15.0.35:
+          staging_spine1: 10.15.9.11
+          staging_leaf1: 10.15.9.12
+          staging_leaf2: 10.15.9.13
+          prod_spine1: 10.15.9.14
+          prod_leaf1: 10.15.9.15
+          prod_leaf2: 10.15.9.16
+          # ansible_user: "admin"
+          # ansible_password: "cisco.123"
+          # switch_username: admin
+          # switch_password: "cisco.123"
+    nxos:
+      hosts:
+        10.15.4.11:
+           ansible_connection: ansible.netcommon.network_cli
+           ansible_network_os: cisco.nxos.nxos
+           ansible_username: admin
+           ansible_user: "admin"
+           ansible_password: "cisco.123"
+           ansible_ssh_port: 22
+        10.15.4.12:
+           ansible_connection: ansible.netcommon.network_cli
+           ansible_network_os: cisco.nxos.nxos
+           ansible_username: admin
+           ansible_user: "admin"
+           ansible_password: "cisco.123"
+           ansible_ssh_port: 22
+        10.15.4.13:
+           ansible_connection: ansible.netcommon.network_cli
+           ansible_network_os: cisco.nxos.nxos
+           ansible_username: admin
+           ansible_user: "admin"
+           ansible_password: "cisco.123"
+           ansible_ssh_port: 22
+        10.15.4.14:
+           ansible_connection: ansible.netcommon.network_cli
+           ansible_network_os: cisco.nxos.nxos
+           ansible_username: admin
+           ansible_user: "admin"
+           ansible_password: "cisco.123"
+           ansible_ssh_port: 22
+        10.15.4.15:
+           ansible_connection: ansible.netcommon.network_cli
+           ansible_network_os: cisco.nxos.nxos
+           ansible_username: admin
+           ansible_user: "admin"
+           ansible_password: "cisco.123"
+           ansible_ssh_port: 22
+        10.15.4.16:
+           ansible_connection: ansible.netcommon.network_cli
+           ansible_network_os: cisco.nxos.nxos
+           ansible_username: admin
+           ansible_user: "admin"
+           ansible_password: "cisco.123"
+           ansible_ssh_port: 22

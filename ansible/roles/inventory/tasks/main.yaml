@@ -1,0 +1,31 @@
+---
+
+- name: Manage switches in the fabric
+  cisco.dcnm.dcnm_inventory:
+    fabric: "{{ ndfc_fabric_name }}"
+    state: merged
+    config:
+      - seed_ip: "{{ staging_spine1 }}"
+        auth_proto: MD5
+        user_name: "{{ switch_username }}"
+        password: "{{ switch_password }}"
+        max_hops: 0
+        role: spine
+        preserve_config: False
+      - seed_ip: "{{ staging_leaf1 }}"
+        auth_proto: MD5
+        user_name: "{{ switch_username }}"
+        password: "{{ switch_password }}"
+        max_hops: 0
+        role: leaf
+        preserve_config: False
+      - seed_ip: "{{ staging_leaf2 }}"
+        auth_proto: MD5
+        user_name: "{{ switch_username }}"
+        password: "{{ switch_password }}"
+        max_hops: 0
+        role: leaf
+        preserve_config: False
+  vars:
+      ansible_command_timeout: 1000
+      ansible_connect_timeout: 1000
