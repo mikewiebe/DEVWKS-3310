@@ -1,5 +1,8 @@
 ---
 
+# Create Templates
+#
+# -----------------------------------------------------------------------------
 - name: Create Template To Enable Telemetry Feature
   cisco.dcnm.dcnm_template:
     state: merged        # only choose form [merged, deleted, query]
@@ -31,6 +34,9 @@
               dst-grp 101
               snsr-grp 101 sample-interval 10101
 
+# Create Policies
+#
+# -----------------------------------------------------------------------------
 - name: Create and Apply Policy for Telemetry Configuration
   cisco.dcnm.dcnm_policy:
     fabric: "{{ ndfc_fabric_name }}" 
@@ -48,6 +54,9 @@
       - switch:
         - ip: "{{ staging_leaf1 }}"
 
+# Query To Make Sure Policies are Applied
+#
+# -----------------------------------------------------------------------------
 - name: Query Policies
   cisco.dcnm.dcnm_policy:
     fabric: "{{ ndfc_fabric_name }}" 

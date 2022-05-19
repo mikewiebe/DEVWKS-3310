@@ -1,6 +1,9 @@
 ---
 
-- name: Create New Fabric VRFs and attach to leaf1 and leaf2
+# Add VRFs
+#
+# -----------------------------------------------------------------------------
+- name: Create New Fabric VRFs and attach and deploy to Leaf1 and Leaf2
   cisco.dcnm.dcnm_vrf:
     fabric: "{{ ndfc_fabric_name }}"
     state: merged
@@ -23,6 +26,9 @@
         - ip_address: "{{ staging_leaf1 }}"
         - ip_address: "{{ staging_leaf2 }}"
 
+# Add Networks
+#
+# -----------------------------------------------------------------------------
 - name: Add New Networks to the Fabric
   cisco.dcnm.dcnm_network:
     fabric: "{{ ndfc_fabric_name }}"

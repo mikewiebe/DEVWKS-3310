@@ -1,6 +1,9 @@
 ---
 
-- name: Delete Policies
+# Delete Policies
+#
+# -----------------------------------------------------------------------------
+- name: Delete Both Telemetry Policies
   cisco.dcnm.dcnm_policy:
     fabric: "{{ ndfc_fabric_name }}" 
     state: deleted
@@ -12,7 +15,7 @@
       - switch:
         - ip: "{{ staging_leaf1 }}"
 
-- name: Query Policies
+- name: Query Policies To Ensure They Are Removed
   cisco.dcnm.dcnm_policy:
     fabric: "{{ ndfc_fabric_name }}" 
     state: query
