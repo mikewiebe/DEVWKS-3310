@@ -39,7 +39,7 @@
   cisco.dcnm.dcnm_interface:
     check_deploy: False
     fabric: "{{ ndfc_fabric_name }}" 
-    state: deleted                         # only choose form [merged, replaced, deleted, overridden, query]
+    state: merged                         # only choose form [merged, replaced, deleted, overridden, query]
     config:
       - name: vpc750                      # should be of the form vpc<port-id>
         type: vpc                         # choose from this list [pc, vpc, sub_int, lo, eth]
@@ -68,7 +68,7 @@
 # - name: Create loopback interfaces
 #   cisco.dcnm.dcnm_interface:
 #     fabric: "{{ ndfc_fabric_name }}"
-#     state: deleted                         # only choose from [merged, replaced, deleted, overridden, query]
+#     state: query                         # only choose from [merged, replaced, deleted, overridden, query]
 #     config:
 #       - name: lo55                        # should be of the form lo<port-id>
 #         type: lo                          # choose from this list [pc, vpc, sub_int, lo, eth]

@@ -1,0 +1,64 @@
+---
+
+- name: Create Template To Enable Telemetry Feature
+  cisco.dcnm.dcnm_template:
+    state: merged        # only choose form [merged, deleted, query]
+    config:
+      - name: template_telemetry_feature
+        description: "Template to enable Telemetry Feature"
+        tags: "telemetry feature"
+        content: |
+          feature telemetry
+
+- name: Create Template For Telemetry Configuration
+  cisco.dcnm.dcnm_template:
+    state: merged        # only choose form [merged, deleted, query]
+    config:
+      - name: template_telemetry
+        description: "Template for configuring Telemetry"
+        tags: "telemetry config"
+        content: |
+          telemetry
+            certificate /bootflash/telegraf.crt telegraf
+            destination-profile
+              use-vrf management
+            destination-group 101
+              ip address 192.168.55.55 port 57101 protocol gRPC encoding GPB
+            sensor-group 101
+              data-source DME
+              path sys/ch depth unbounded
+            subscription 101
+              dst-grp 101
+              snsr-grp 101 sample-interval 10101
+
+- name: Create and Apply Policy for Telemetry Configuration
+  cisco.dcnm.dcnm_policy:
+    fabric: "{{ ndfc_fabric_name }}" 
+    state: merged
+    deploy: true
+    config:
+      - name: template_telemetry_feature  # This must be a valid template name
+        create_additional_policy: false  # Do not create a policy if it already exists
+        priority: 1
+
+      - name: template_telemetry  # This must be a valid template name
+        create_additional_policy: false  # Do not create a policy if it already exists
+        priority: 2
+
+      - switch:
+        - ip: "{{ staging_leaf1 }}"
+
+- name: Query Policies
+  cisco.dcnm.dcnm_policy:
+    fabric: "{{ ndfc_fabric_name }}" 
+    state: query
+    deploy: true
+    config:
+      - name: template_telemetry_feature
+      - name: template_telemetry
+      - switch:
+        - ip: "{{ staging_leaf1 }}"
+  register: result
+
+- name: Display Query Result
+  debug: msg="{{ result['response'] }}"

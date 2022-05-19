@@ -1,0 +1,19 @@
+---
+
+- name: Create a Vlan using vlan template
+  cisco.dcnm.dcnm_policy:
+    fabric: "{{ ndfc_fabric_name }}"
+    state: merged
+    config:
+      - name: create_vlan
+        create_additional_policy: false
+        priority: 4
+        policy_vars:
+          VLAN: 55
+          NAME: Created_W_Ansible
+
+      - switch:
+          - ip: "{{ staging_leaf1 }}"
+  vars:
+      ansible_command_timeout: 60
+      ansible_connect_timeout: 60

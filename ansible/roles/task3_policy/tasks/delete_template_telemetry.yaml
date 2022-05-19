@@ -1,0 +1,28 @@
+---
+
+- name: Delete Policies
+  cisco.dcnm.dcnm_policy:
+    fabric: "{{ ndfc_fabric_name }}" 
+    state: deleted
+    deploy: true
+    config:
+      - name: template_telemetry_feature
+      - name: template_telemetry
+
+      - switch:
+        - ip: "{{ staging_leaf1 }}"
+
+- name: Query Policies
+  cisco.dcnm.dcnm_policy:
+    fabric: "{{ ndfc_fabric_name }}" 
+    state: query
+    deploy: true
+    config:
+      - name: template_telemetry_feature
+      - name: template_telemetry
+      - switch:
+        - ip: "{{ staging_leaf1 }}"
+  register: result
+
+- name: Display Query Result
+  debug: msg="{{ result['response'] }}"
