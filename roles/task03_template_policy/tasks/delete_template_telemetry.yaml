@@ -11,7 +11,7 @@
     config:
       - name: template_telemetry_feature
       - name: template_telemetry
-      - name: POLICY-121100
+      - name: POLICY-121130
 
       - switch:
         - ip: "{{ device_leaf1 }}"
@@ -27,7 +27,7 @@
     config:
       - name: template_telemetry_feature
       - name: template_telemetry
-      - name: create_vlan
+      - name: ntp_server
       - switch:
         - ip: "{{ device_leaf1 }}"
   register: result

@@ -5,12 +5,12 @@
     fabric: "{{ fabric.name }}"
     state: merged
     config:
-      - name: create_vlan
+      - name: ntp_server
         create_additional_policy: false
         priority: 4
         policy_vars:
-          VLAN: 55
-          NAME: Created_W_Ansible
+          NTP_SERVER: 10.55.0.1
+          NTP_SERVER_VRF: management
 
       - switch:
           - ip: "{{ device_leaf1 }}"
