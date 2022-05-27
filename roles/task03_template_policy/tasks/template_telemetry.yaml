@@ -5,7 +5,7 @@
 # -----------------------------------------------------------------------------
 - name: Create Template To Enable Telemetry Feature
   cisco.dcnm.dcnm_template:
-    state: merged        # only choose form [merged, deleted, query]
+    state: merged
     config:
       - name: template_telemetry_feature
         description: "Template to enable Telemetry Feature"
@@ -15,7 +15,7 @@
 
 - name: Create Template For Telemetry Configuration
   cisco.dcnm.dcnm_template:
-    state: merged        # only choose form [merged, deleted, query]
+    state: merged
     config:
       - name: template_telemetry
         description: "Template for configuring Telemetry"
@@ -39,7 +39,7 @@
 # -----------------------------------------------------------------------------
 - name: Create and Apply Policy for Telemetry Configuration
   cisco.dcnm.dcnm_policy:
-    fabric: "{{ ndfc_fabric_name }}" 
+    fabric: "{{ fabric.name }}"
     state: merged
     deploy: true
     config:
@@ -52,21 +52,21 @@
         priority: 2
 
       - switch:
-        - ip: "{{ staging_leaf1 }}"
+        - ip: "{{ device_leaf1 }}"
 
 # Query To Make Sure Policies are Applied
 #
 # -----------------------------------------------------------------------------
 - name: Query Policies
   cisco.dcnm.dcnm_policy:
-    fabric: "{{ ndfc_fabric_name }}" 
+    fabric: "{{ fabric.name }}"
     state: query
     deploy: true
     config:
       - name: template_telemetry_feature
       - name: template_telemetry
       - switch:
-        - ip: "{{ staging_leaf1 }}"
+        - ip: "{{ device_leaf1 }}"
   register: result
 
 - name: Display Query Result

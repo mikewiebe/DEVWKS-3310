@@ -2,4 +2,4 @@
 
 - { include: template_telemetry.yaml, tags: ['telemetry'] }
 - { include: template_variables.yaml, tags: ['vars'] }
-- { include: delete_template_telemetry.yaml, tags: ['delete'] }
+- { include: delete_template_telemetry.yaml, tags: ['template_delete'] }

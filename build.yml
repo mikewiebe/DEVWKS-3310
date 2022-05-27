@@ -1,0 +1,8 @@
+---
+- name: Build fabric on NDFC
+  hosts: ndfc
+  gather_facts: false
+  roles:
+    - task01_interfaces
+    - task02_overlay
+    - task03_template_policy

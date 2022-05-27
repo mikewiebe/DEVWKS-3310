@@ -1,0 +1,32 @@
+---
+- name: verify | check if all VRFs are deployed
+  block:
+    - name: verify | query all VRFs from {{ fabric.name }}
+      dcnm_rest:
+        path: "/appcenter/cisco/ndfc/api/v1/lan-fabric/rest/top-down/fabrics/{{ fabric.name }}/vrfs"
+        method: GET
+      register: result
+    - name: verify | check if status is DEPLOYED
+      assert:
+        that:
+          - item.vrfStatus != "OUT-OF-SYNC"
+        quiet: true
+      loop: "{{ result.response.DATA }}"
+  tags:
+    - verify
+
+- name: verify | check if all Networks are deployed
+  block:
+    - name: verify | query all Networks from {{ fabric.name }}
+      dcnm_rest:
+        path: "/appcenter/cisco/ndfc/api/v1/lan-fabric/rest/top-down/fabrics/{{ fabric.name }}/networks"
+        method: GET
+      register: result
+    - name: verify | check if status is DEPLOYED
+      assert:
+        that:
+          - item.networkStatus != "OUT-OF-SYNC"
+        quiet: true
+      loop: "{{ result.response.DATA }}"
+  tags:
+    - verify

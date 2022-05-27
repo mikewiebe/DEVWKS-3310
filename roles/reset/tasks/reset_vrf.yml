@@ -1,0 +1,6 @@
+---
+- name: delete dcnm vrf from {{ fabric.name }}
+  cisco.dcnm.dcnm_vrf:
+    fabric: "{{ fabric.name }}"
+    config: "{{ vrfs }}"
+    state: deleted

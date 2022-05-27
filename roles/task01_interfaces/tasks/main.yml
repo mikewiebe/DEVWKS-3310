@@ -1,0 +1,30 @@
+---
+- name: current vpc config
+  debug:
+    msg: "{{ item.name }} of switch {{ item.switch }}"
+  loop: "{{ interface.vpc }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: create vpc
+  dcnm_interface:
+    fabric: "{{ fabric.name }}"
+    config: "{{ interface.vpc }}"
+  tags:
+    - interface
+    - vpc
+
+- name: current loopback config
+  debug:
+    msg: "{{ item.name }} of switch {{ item.switch }}"
+  loop: "{{ interface.loopback }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: create loopback
+  dcnm_interface:
+    fabric: "{{ fabric.name }}"
+    config: "{{ interface.loopback }}"
+  tags:
+    - interface
+    - loopback

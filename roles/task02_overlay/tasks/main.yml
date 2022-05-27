@@ -1,0 +1,92 @@
+---
+# -------------------
+# CREATE VRF SECTION
+# -------------------
+
+- name: update attachments of vrfs
+  set_fact:
+    update_list: "{{ update_list + update }}"
+  loop: "{{ vrfs }}"
+  loop_control:
+    label: "{{ item.vrf_name }}"
+    index_var: i
+  vars:
+    update_list: []
+    update:
+      - path: vrfs[{{ i }}].attach
+        value: "{{ vrf_attach_group[item.attach_group] }}"
+  tags:
+    - vrf
+    - overlay
+
+- name: update VRF config
+  ansible.utils.update_fact:
+    updates: "{{ update_list }}"
+  register: updated_vrfs
+  tags:
+    - vrf
+    - overlay
+
+- name: current vrf config
+  debug:
+    msg: "{{ item }}"
+  loop: "{{ updated_vrfs.vrfs }}"
+  loop_control:
+    label: "{{ item.vrf_name }}"
+  tags:
+    - vrf
+    - overlay
+
+- name: create vrfs
+  dcnm_vrf:
+    fabric: "{{ fabric.name }}"
+    config: "{{ updated_vrfs.vrfs }}"
+  tags:
+    - vrf
+    - overlay
+
+# -----------------------
+# CREATE NETWORK SECTION
+# -----------------------
+
+- name: update attachments of network
+  set_fact:
+    update_list: "{{ update_list + update }}"
+  loop: "{{ networks }}"
+  loop_control:
+    label: "{{ item.net_name }}"
+    index_var: i
+  vars:
+    update_list: []
+    update:
+      - path: networks[{{ i }}].attach
+        value: "{{ attach_group[item.attach_group] }}"
+  tags:
+    - overlay
+    - network
+
+- name: update network config
+  ansible.utils.update_fact:
+    updates: "{{ update_list }}"
+  register: updated_network
+  tags:
+    - overlay
+    - network
+
+- name: current netowrk config
+  debug:
+    msg: "{{ item }}"
+  loop: "{{ updated_network.networks }}"
+  loop_control:
+    label: "{{ item.net_name }}"
+  tags:
+    - overlay
+    - network
+
+- name: create networks
+  dcnm_network:
+    fabric: "{{ fabric.name }}"
+    config: "{{ updated_network.networks }}"
+  tags:
+    - overlay
+    - network

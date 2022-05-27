@@ -1,8 +1,8 @@
 ---
 
-- name: Create a Vlan using vlan template
+- name: Create an NTP Server using the ntp_server NDFC template
   cisco.dcnm.dcnm_policy:
-    fabric: "{{ ndfc_fabric_name }}"
+    fabric: "{{ fabric.name }}"
     state: merged
     config:
       - name: create_vlan
@@ -13,7 +13,7 @@
           NAME: Created_W_Ansible
 
       - switch:
-          - ip: "{{ staging_leaf1 }}"
+          - ip: "{{ device_leaf1 }}"
   vars:
       ansible_command_timeout: 60
       ansible_connect_timeout: 60

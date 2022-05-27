@@ -3,28 +3,33 @@
 # Delete Policies
 #
 # -----------------------------------------------------------------------------
-- name: Delete Both Telemetry Policies
+- name: Delete All Telemetry Policies
   cisco.dcnm.dcnm_policy:
-    fabric: "{{ ndfc_fabric_name }}" 
+    fabric: "{{ fabric.name }}" 
     state: deleted
     deploy: true
     config:
       - name: template_telemetry_feature
       - name: template_telemetry
+      - name: POLICY-121100
 
       - switch:
-        - ip: "{{ staging_leaf1 }}"
+        - ip: "{{ device_leaf1 }}"
+  vars:
+      ansible_command_timeout: 90
+      ansible_connect_timeout: 90
 
 - name: Query Policies To Ensure They Are Removed
   cisco.dcnm.dcnm_policy:
-    fabric: "{{ ndfc_fabric_name }}" 
+    fabric: "{{ fabric.name }}" 
     state: query
     deploy: true
     config:
       - name: template_telemetry_feature
       - name: template_telemetry
+      - name: create_vlan
       - switch:
-        - ip: "{{ staging_leaf1 }}"
+        - ip: "{{ device_leaf1 }}"
   register: result
 
 - name: Display Query Result
