@@ -1,6 +1,0 @@
----
-- name: Add devices to NDFC fabric
-  hosts: ndfc
-  gather_facts: false
-  roles:
-    - setup_fabric
