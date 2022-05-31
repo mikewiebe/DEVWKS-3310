@@ -1,16 +1,1 @@
----
-ndfc:
-  children:
-    prod:
-      hosts:
-        10.15.0.35:
-          ansible_connection: ansible.netcommon.httpapi
-          ansible_httpapi_use_ssl: true
-          ansible_httpapi_validate_certs: false
-          ansible_python_interpreter: auto_silent
-          ansible_network_os: cisco.dcnm.dcnm
-          ansible_user: admin
-          ansible_password: "{{ ndfc_password }}"
-          device_spine: 10.15.9.14
-          device_leaf1: 10.15.9.15
-          device_leaf2: 10.15.9.16
+
