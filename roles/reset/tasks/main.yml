@@ -1,5 +1,0 @@
----
-
-- include_tasks: reset_fabric.yml
-- include_tasks: reset_network.yml
-- include_tasks: reset_vrf.yml

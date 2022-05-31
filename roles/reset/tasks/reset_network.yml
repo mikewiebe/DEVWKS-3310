@@ -1,6 +1,0 @@
----
-- name: delete networks from {{ fabric.name }}
-  cisco.dcnm.dcnm_network:
-    fabric: "{{ fabric.name }}"
-    state: deleted
-    config: "{{ networks }}"

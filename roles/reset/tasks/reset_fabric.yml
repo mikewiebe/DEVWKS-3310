@@ -1,6 +1,0 @@
----
-
-- name: reset | remove inventory from fabric {{ fabric.name }}
-  cisco.dcnm.dcnm_inventory:
-    fabric: "{{ fabric.name }}"
-    state: deleted
