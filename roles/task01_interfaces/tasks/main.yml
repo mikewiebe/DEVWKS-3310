@@ -6,7 +6,7 @@
   loop_control:
     label: "{{ item.name }}"
 
-- name: create vpc
+- name: Create a vPC interface between leaf1 and leaf2
   dcnm_interface:
     fabric: "{{ fabric.name }}"
     config: "{{ interface.vpc }}"
@@ -21,7 +21,7 @@
   loop_control:
     label: "{{ item.name }}"
 
-- name: create loopback
+- name: Create a Loopback interface on leaf1 and leaf2
   dcnm_interface:
     fabric: "{{ fabric.name }}"
     config: "{{ interface.loopback }}"

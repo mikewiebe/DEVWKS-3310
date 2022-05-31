@@ -1,0 +1,13 @@
+---
+vrf_attach_group:
+  all_leaf:
+    - ip_address: "{{ device_leaf1 }}"
+    - ip_address: "{{ device_leaf2 }}"
+attach_group:
+  esxi:
+    - ip_address: "{{ device_leaf1 }}"
+      ports:
+        - Port-channel10
+    - ip_address: "{{ device_leaf2 }}"
+      ports:
+        - Port-channel10

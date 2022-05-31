@@ -27,8 +27,6 @@
 
 - debug: msg="{{ updated_fabric }}"
 
-- meta: end_play
-
 - name: create fabric {{ fabric.name }} on ndfc
   vars:
     payload:

@@ -11,7 +11,7 @@
     config:
       - name: template_telemetry_feature
       - name: template_telemetry
-      - name: POLICY-121130
+      # - name: POLICY-121130
 
       - switch:
         - ip: "{{ device_leaf1 }}"
