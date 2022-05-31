@@ -1,5 +1,1 @@
----
 
-- { include: template_telemetry.yml, tags: ['telemetry'] }
-- { include: template_variables.yml, tags: ['ntp_vars'] }
-- { include: delete_templates_policies.yml, tags: ['template_delete'] }
