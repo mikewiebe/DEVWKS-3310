@@ -2,15 +2,222 @@
 ndfc:
   children:
     prod:
+      vars:
+        ansible_connection: ansible.netcommon.httpapi
+        ansible_httpapi_use_ssl: true
+        ansible_httpapi_validate_certs: false
+        ansible_python_interpreter: auto_silent
+        ansible_network_os: cisco.dcnm.dcnm
+        ansible_user: admin
+        ansible_password: "{{ ndfc_password }}"
       hosts:
-        10.15.0.35:
-          ansible_connection: ansible.netcommon.httpapi
-          ansible_httpapi_use_ssl: true
-          ansible_httpapi_validate_certs: false
-          ansible_python_interpreter: auto_silent
-          ansible_network_os: cisco.dcnm.dcnm
-          ansible_user: admin
-          ansible_password: "{{ ndfc_password }}"
+        nd1:
+          ansible_host: 10.15.0.11
+          pod: pod1
+          pod_id: 1
+          device_spine: 10.15.1.14
+          device_leaf1: 10.15.1.15
+          device_leaf2: 10.15.1.16
+        nd2:
+          ansible_host: 10.15.0.14
+          pod: pod2
+          pod_id: 2
+          device_spine: 10.15.2.14
+          device_leaf1: 10.15.2.15
+          device_leaf2: 10.15.2.16
+        nd3:
+          ansible_host: 10.15.0.17
+          pod: pod3
+          pod_id: 3
+          device_spine: 10.15.3.14
+          device_leaf1: 10.15.3.15
+          device_leaf2: 10.15.3.16
+        nd4:
+          ansible_host: 10.15.0.20
+          pod: pod4
+          pod_id: 4
+          device_spine: 10.15.4.14
+          device_leaf1: 10.15.4.15
+          device_leaf2: 10.15.4.16
+        nd5:
+          ansible_host: 10.15.0.23
+          pod: pod5
+          pod_id: 5
+          device_spine: 10.15.5.14
+          device_leaf1: 10.15.5.15
+          device_leaf2: 10.15.5.16
+        nd6:
+          ansible_host: 10.15.0.26
+          pod: pod6
+          pod_id: 6
+          device_spine: 10.15.6.14
+          device_leaf1: 10.15.6.15
+          device_leaf2: 10.15.6.16
+        nd7:
+          ansible_host: 10.15.0.29
+          pod: pod7
+          pod_id: 7
+          device_spine: 10.15.7.14
+          device_leaf1: 10.15.7.15
+          device_leaf2: 10.15.7.16
+        nd8:
+          ansible_host: 10.15.0.32
+          pod: pod8
+          pod_id: 8
+          device_spine: 10.15.8.14
+          device_leaf1: 10.15.8.15
+          device_leaf2: 10.15.8.16
+        nd9:
+          ansible_host: 10.15.0.35
+          pod: pod9
+          pod_id: 9
           device_spine: 10.15.9.14
           device_leaf1: 10.15.9.15
           device_leaf2: 10.15.9.16
+        nd10:
+          ansible_host: 10.15.0.38
+          pod: pod10
+          pod_id: 10
+          device_spine: 10.15.10.14
+          device_leaf1: 10.15.10.15
+          device_leaf2: 10.15.10.16
+        nd11:
+          ansible_host: 10.15.0.41
+          pod: pod11
+          pod_id: 11
+          device_spine: 10.15.11.14
+          device_leaf1: 10.15.11.15
+          device_leaf2: 10.15.11.16
+        nd12:
+          ansible_host: 10.15.0.44
+          pod: pod12
+          pod_id: 12
+          device_spine: 10.15.12.14
+          device_leaf1: 10.15.12.15
+          device_leaf2: 10.15.12.16
+        nd13:
+          ansible_host: 10.15.0.47
+          pod: pod13
+          pod_id: 13
+          device_spine: 10.15.13.14
+          device_leaf1: 10.15.13.15
+          device_leaf2: 10.15.13.16
+        nd14:
+          ansible_host: 10.15.0.50
+          pod: pod14
+          pod_id: 14
+          device_spine: 10.15.14.14
+          device_leaf1: 10.15.14.15
+          device_leaf2: 10.15.14.16
+        nd15:
+          ansible_host: 10.15.0.53
+          pod: pod15
+          pod_id: 15
+          device_spine: 10.15.15.14
+          device_leaf1: 10.15.15.15
+          device_leaf2: 10.15.15.16
+        nd16:
+          ansible_host: 10.15.0.56
+          pod: pod16
+          pod_id: 16
+          device_spine: 10.15.16.14
+          device_leaf1: 10.15.16.15
+          device_leaf2: 10.15.16.16
+        nd17:
+          ansible_host: 10.15.0.59
+          pod: pod17
+          pod_id: 17
+          device_spine: 10.15.17.14
+          device_leaf1: 10.15.17.15
+          device_leaf2: 10.15.17.16
+        nd18:
+          ansible_host: 10.15.0.62
+          pod: pod18
+          pod_id: 18
+          device_spine: 10.15.18.14
+          device_leaf1: 10.15.18.15
+          device_leaf2: 10.15.18.16
+        nd19:
+          ansible_host: 10.15.0.65
+          pod: pod19
+          pod_id: 19
+          device_spine: 10.15.19.14
+          device_leaf1: 10.15.19.15
+          device_leaf2: 10.15.19.16
+        nd20:
+          ansible_host: 10.15.0.68
+          pod: pod20
+          pod_id: 20
+          device_spine: 10.15.20.14
+          device_leaf1: 10.15.20.15
+          device_leaf2: 10.15.20.16
+        nd21:
+          ansible_host: 10.15.0.71
+          pod: pod21
+          pod_id: 21
+          device_spine: 10.15.21.14
+          device_leaf1: 10.15.21.15
+          device_leaf2: 10.15.21.16
+        nd22:
+          ansible_host: 10.15.0.74
+          pod: pod22
+          pod_id: 22
+          device_spine: 10.15.22.14
+          device_leaf1: 10.15.22.15
+          device_leaf2: 10.15.22.16
+        nd23:
+          ansible_host: 10.15.0.77
+          pod: pod23
+          pod_id: 23
+          device_spine: 10.15.23.14
+          device_leaf1: 10.15.23.15
+          device_leaf2: 10.15.23.16
+        nd24:
+          ansible_host: 10.15.0.80
+          pod: pod24
+          pod_id: 24
+          device_spine: 10.15.24.14
+          device_leaf1: 10.15.24.15
+          device_leaf2: 10.15.24.16
+        nd25:
+          ansible_host: 10.15.0.83
+          pod: pod25
+          pod_id: 25
+          device_spine: 10.15.25.14
+          device_leaf1: 10.15.25.15
+          device_leaf2: 10.15.25.16
+        nd26:
+          ansible_host: 10.15.0.86
+          pod: pod26
+          pod_id: 26
+          device_spine: 10.15.26.14
+          device_leaf1: 10.15.26.15
+          device_leaf2: 10.15.26.16
+        nd27:
+          ansible_host: 10.15.0.89
+          pod: pod27
+          pod_id: 27
+          device_spine: 10.15.27.14
+          device_leaf1: 10.15.27.15
+          device_leaf2: 10.15.27.16
+        nd28:
+          ansible_host: 10.15.0.92
+          pod: pod28
+          pod_id: 28
+          device_spine: 10.15.28.14
+          device_leaf1: 10.15.28.15
+          device_leaf2: 10.15.28.16
+        nd29:
+          ansible_host: 10.15.0.95
+          pod: pod29
+          pod_id: 29
+          device_spine: 10.15.29.14
+          device_leaf1: 10.15.29.15
+          device_leaf2: 10.15.29.16
+        nd30:
+          ansible_host: 10.15.0.98
+          pod: pod30
+          pod_id: 30
+          device_spine: 10.15.30.14
+          device_leaf1: 10.15.30.15
+          device_leaf2: 10.15.30.16

@@ -1,6 +1,6 @@
 ---
 fabric:
-  name: CL-STAGING
+  name: fabric-stage
   asn: 65088
   inventory:
     - seed_ip: 10.15.9.11
