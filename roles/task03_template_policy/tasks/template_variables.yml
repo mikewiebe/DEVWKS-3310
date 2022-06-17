@@ -1,19 +1,42 @@
 ---
 
-- name: Create an NTP Server using the ntp_server NDFC template
+- name: Create and Apply NTP Server Config using the ntp_server NDFC template
   cisco.dcnm.dcnm_policy:
     fabric: "{{ fabric.name }}"
     state: merged
     config:
-      - name: ntp_server
-        create_additional_policy: false
-        priority: 4
-        policy_vars:
-          NTP_SERVER: 10.55.0.1
-          NTP_SERVER_VRF: management
-
       - switch:
-          - ip: "{{ device_leaf1 }}"
+        - ip: "{{ device_leaf1 }}"
+          policies:
+            - name: ntp_server
+              create_additional_policy: false
+              priority: 4
+              policy_vars:
+                NTP_SERVER: 10.55.0.1
+                NTP_SERVER_VRF: management
+            - name: dnsList
+              create_additional_policy: false
+              priority: 4
+              policy_vars:
+                NAME_SERVER_ADDRESSLIST: 192.168.55.1
+
+        - ip: "{{ device_leaf2 }}"
+          policies:
+            - name: ntp_server
+              create_additional_policy: false
+              priority: 4
+              policy_vars:
+                NTP_SERVER: 10.66.0.2
+                NTP_SERVER_VRF: management
+
+        - ip: "{{ device_spine }}"
+          policies:
+            - name: ntp_server
+              create_additional_policy: false
+              priority: 4
+              policy_vars:
+                NTP_SERVER: 10.188.0.55
+                NTP_SERVER_VRF: management
   vars:
       ansible_command_timeout: 60
       ansible_connect_timeout: 60
