@@ -6,16 +6,16 @@ stages:
   - deploy
   - verify
 
+# ---------------------------
+# ANSIBLE LINT STAGE
+# ---------------------------
 ansible lint:
   stage: lint
   image:
-    name: "cytopia/ansible-lint"
+    name: "cytopia/ansible-lint:5"
     entrypoint: [""]
-  except:
-    - main
-  only:
-    - merge_requests
-    - pushes
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "stage"'
   before_script:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_pass
     - export ANSIBLE_PERSISTENT_COMMAND_TIMEOUT=1000
@@ -25,18 +25,20 @@ ansible lint:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_pass
   script:
     - ansible-galaxy -vvv collection install -r collections/requirements.yml
+    - ansible-lint -p roles/task04_template_policy/tasks/template_variables.yml
+    - ansible-lint -p group_vars/all/overlay.yml
     - ansible-lint -p build.yml
 
+# ---------------------------
+# DEPLOY ON STAGING FABRIC
+# ---------------------------
 deploy_on_stage:
   stage: deploy
   image:
     name: "cytopia/ansible"
     entrypoint: [""]
-  except:
-    - main
-  only:
-    - merge_requests
-    - pushes
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
   before_script:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_pass
     - export ANSIBLE_PERSISTENT_COMMAND_TIMEOUT=1000
@@ -46,48 +48,57 @@ deploy_on_stage:
     - ansible-galaxy -vvv collection install -r collections/requirements.yml
     - ansible-playbook -i hosts.stage.yml build.yml --vault-password-file .vault_pass
 
-verify_on_staging:
+# ---------------------------
+# VERIFY ON STAGING FABRIC
+# ---------------------------
+verify_on_stage:
   stage: verify
   image:
     name: "cytopia/ansible"
     entrypoint: [""]
-  except:
-    - main
-  only:
-    - merge_requests
-    - pushes
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
   before_script:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_pass
   script:
     - sleep 10
     - ansible-playbook --version
     - ansible-galaxy -vvv collection install -r collections/requirements.yml
-    - ansible-playbook -i hosts.stage.yml verify.yml  --vault-password-file .vault_pass -vvvv
+    - ansible-playbook -i hosts.stage.yml verify.yml  --vault-password-file .vault_pass
 
-# deploy_on_prod:
-#   stage: deploy
-#   image:
-#     name: "cytopia/ansible"
-#     entrypoint: [""]
-#   only:
-#     - main
-#   before_script:
-#     - echo $ANSIBLE_VAULT_PASSWORD > .vault_pass
-#     - export ANSIBLE_PERSISTENT_COMMAND_TIMEOUT=1000
-#     - export ANSIBLE_PERSISTENT_CONNECT_TIMEOUT=1000
-#   script:
-#     - ansible-playbook --version
-#     - ansible-galaxy -vvv collection install -r collections/requirements.yml
-#     - ansible-playbook -i hosts.prod.yml build.yml --vault-password-file .vault_pass
+# -----------------------------
+# DEPLOY ON PRODUCTION FABRIC
+# -----------------------------
+deploy_on_prod:
+  stage: deploy
+  image:
+    name: "cytopia/ansible"
+    entrypoint: [""]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
+  before_script:
+    - echo $ANSIBLE_VAULT_PASSWORD > .vault_pass
+    - export ANSIBLE_PERSISTENT_COMMAND_TIMEOUT=1000
+    - export ANSIBLE_PERSISTENT_CONNECT_TIMEOUT=1000
+  script:
+    - ansible-playbook --version
+    - ansible-galaxy -vvv collection install -r collections/requirements.yml
+    - ansible-playbook -i hosts.prod.yml build.yml --vault-password-file .vault_pass
 
-# verify_on_prod:
-#   stage: verify
-#   only:
-#     - main
-#   before_script:
-#     - echo $ANSIBLE_VAULT_PASSWORD > .vault_pass
-#   script:
-#     - sleep 10
-#     - ansible-playbook --version
-#     - ansible-galaxy -vvv collection install -r collections/requirements.yml
-#     - ansible-playbook -i hosts.prod.yml verify.yml  --vault-password-file .vault_pass
+# -----------------------------
+# VERIFY ON PRODUCTION FABRIC
+# -----------------------------
+verify_on_prod:
+  stage: verify
+  image:
+    name: "cytopia/ansible"
+    entrypoint: [""]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
+  before_script:
+    - echo $ANSIBLE_VAULT_PASSWORD > .vault_pass
+  script:
+    - sleep 10
+    - ansible-playbook --version
+    - ansible-galaxy -vvv collection install -r collections/requirements.yml
+    - ansible-playbook -i hosts.prod.yml verify.yml  --vault-password-file .vault_pass
