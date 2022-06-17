@@ -30,3 +30,21 @@
       loop: "{{ result.response.DATA }}"
   tags:
     - verify
+
+- name: Verify DNS Policy
+  cisco.dcnm.dcnm_policy:
+    fabric: "{{ fabric.name }}"
+    state: query
+    deploy: true
+    config:
+      - name: dnsList
+      - switch:
+        - ip: "{{ device_leaf1 }}"
+  register: result
+
+- name: Display Query Result
+  debug: msg="{{ result.response[0].generatedConfig }}"
+
+- assert:
+    that:
+      - '"ip name-server 192.168.55.1" in result.response[0].generatedConfig'
